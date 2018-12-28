@@ -2,7 +2,9 @@ const image_id = document.getElementById('imageID')
 const x_text = document.getElementById("x_text")
 const y_text = document.getElementById("y_text")
 const list =  document.getElementById("list")
-
+const points_text = document.getElementById("points")
+const button_start = document.getElementById("btnEmpezar")
+const button_delete = document.getElementById("DeleteLast")
 
 class Installer {
 
@@ -23,6 +25,15 @@ class Installer {
         image_id.src= "lee.jpg"
         this.image = image_id
 
+        // Change button state
+        button_start.innerHTML = "Instalando..."
+        button_start.disabled = true
+
+        self.points_text = points_text
+
+        // Delete button state
+        self.button_delete = button_delete
+
         // Text
         self.texts = {
             x_text: x_text,
@@ -40,21 +51,21 @@ class Installer {
         }
         this.addEventdOnImage() //().bind(this)
         this.onChange()
+        this.onDeleteLast()
     }
     onChange(){
         $(document).ready(function(){
             $('#texts').bind("DOMSubtreeModified",function(){
-                let points = self.listpoints
-                let points_lenght = points.length
-                
-                if ( points_lenght > 0 ){
-                    console.log( "more of zero with lenght", points_lenght )
-                    console.log('points are', points)
-                    //.getElementById('list').innerHTML = points[i] 
-                }
-            //document.getElementById("name") 
+                self.points_text.innerHTML = JSON.stringify(self.listpoints, null, 4);
         });
         })
+    }
+    onDeleteLast(){
+        $("#DeleteLast").click(function() {
+            console.log('Deleting...')
+            self.listpoints.pop();
+            self.points_text.innerHTML = JSON.stringify(self.listpoints, null, 4);
+          });
     }
     addEventdOnImage(){
         this.GetCoordinates()
@@ -69,14 +80,12 @@ class Installer {
                     x: 0,
                     y: 0
                 })
-
                 points.x = x
                 points.y = y
                 self.listpoints.push(points)
 
                 self.texts.x_text.innerHTML = `X: ${x}`
                 self.texts.y_text.innerHTML = `Y: ${y}`
-                console.log(self.listpoints)
             });
         });
     }
