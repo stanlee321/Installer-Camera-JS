@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <title>Installer program</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="/static/style.css">
     </head>
 
     <body>
@@ -16,13 +16,14 @@
         </header>
         <div class="split left">
             <div class="centered">
-                <img id="imageID" src="red.gif" width="400" height="300" />
+                <img id="imageID" src="/static/images/red.gif" width="400" height="300" />
                 <button id="btnEmpezar" class="btn-start" onclick="startInstaller()">Instalar</button>
                 <div id="texts">
-                    <h1 id="x_text">0</h1>
-                    <h1 id="y_text">0</h1>
+                    <h1 id="x_text" style="color:white;">0</h1>
+                    <h1 id="y_text" style="color:white;">0</h1>
                 </div>
                 <button id="DeleteLast" class="btn-delete">DeleteLast</button>
+                <button id="SendData" class="btn-send">Send Data</button>
             </div>
         </div>
         <div class="split right">
@@ -30,7 +31,7 @@
                 <pre id="points"></pre>
             </div>
         </div>
-        <script src="index.js"></script>
+        <script src="/static/index.js"></script>
     </body>
 
 </html>

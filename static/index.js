@@ -5,24 +5,43 @@ const list =  document.getElementById("list")
 const points_text = document.getElementById("points")
 const button_start = document.getElementById("btnEmpezar")
 const button_delete = document.getElementById("DeleteLast")
+const button_send = document.getElementById("SendData")
 
 class Installer {
 
+    // Setup constructor
     constructor() {
         const self = this
 
         this.x = 0
         this.y = 0
-
+        this.response = Object
+        this.image_path = Object
         this.setup()
 
+    }
+
+    _get_data(){
+        let response
+        response = $.get("http://127.0.0.1:5000/api/v1/resources/image");
+        console.log('RESPONSE FROM GET: ',response)
+        console.log('Status code', response.state)
+        console.log('image_path', response.responseJSON)
+
+        if (response.status===200) {
+            this.image_path = response.responseJSON
+        }else {
+            this.image_path = 'none'
+        }
+        console.log('IMAGE_PATH: ', this.image_path)
+        return this.image_path
     }
 
     setup() {
         // TODO LOAD IMAGE FROM DATABASE or API CALL
         
         // Image
-        image_id.src= "lee.jpg"
+        image_id.src= this._get_data();
         this.image = image_id
 
         // Change button state
