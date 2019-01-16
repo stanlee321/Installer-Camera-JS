@@ -15,35 +15,13 @@ class Installer {
 
         this.x = 0
         this.y = 0
-        this.response = Object
-        this.image_path = Object
         this.setup()
-
     }
-
-    _get_data(){
-        let response
-        response = $.get("http://127.0.0.1:5000/api/v1/resources/image");
-        console.log('RESPONSE FROM GET: ',response)
-        console.log('Status code', response.state)
-        console.log('image_path', response.responseJSON)
-
-        if (response.status===200) {
-            this.image_path = response.responseJSON
-        }else {
-            this.image_path = 'none'
-        }
-        console.log('IMAGE_PATH: ', this.image_path)
-        return this.image_path
-    }
-
     setup() {
         // TODO LOAD IMAGE FROM DATABASE or API CALL
         
         // Image
-        image_id.src= this._get_data();
-        this.image = image_id
-
+        this.getData();
         // Change button state
         button_start.innerHTML = "Instalando..."
         button_start.disabled = true
@@ -72,6 +50,18 @@ class Installer {
         this.onChange()
         this.onDeleteLast()
     }
+    getData(){
+        $(document).ready(function(){
+            $.ajax({
+                url: "http://127.0.0.1:5000/api/v1/resources/image",
+                dataType: "json",
+                success: function(data) {
+                    $("#imageID").attr("src",data.image_path);
+                }
+            })
+        })
+    }
+    
     onChange(){
         $(document).ready(function(){
             $('#texts').bind("DOMSubtreeModified",function(){
@@ -111,5 +101,6 @@ class Installer {
 }
 
 function startInstaller() {
+    console.log('Staring installer class')
     window.install = new Installer()
 }

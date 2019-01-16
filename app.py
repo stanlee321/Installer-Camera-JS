@@ -3,6 +3,7 @@ import flask
 from flask import request, jsonify, Response, render_template
 import os
 
+
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -10,7 +11,7 @@ app.config["DEBUG"] = True
 def home():
     ##return "<h1>Distant Reading Archive</h1><p>This site is a prototype API for distant reading of science fiction novels.</p>"
     message='hello world'
-    return render_template('index.html')
+    return render_template('home.html')
 
 @app.route('/api/v1/resources/save_json', methods=['POST']) #GET requests will be blocked
 def graph_inputs():
@@ -27,6 +28,7 @@ def get_data():
         }
     )
     response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers['Cache-Control'] = 'public, max-age=0'
     return response
 
 app.run()
